@@ -1,7 +1,7 @@
 import React from "./node_modules/react"
 import { View, Text, StyleSheet, TouchableOpacity, style } from "react-native"
 import PropTypes from "./node_modules/prop-types"
-
+import colors from "../../assets/colors"
 getPosition = (position) => {
     switch (position) {
         case 'left':
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     button: {
         width: 50,
         height: 50,
-        backgroundColor: "#deada5",
+        backgroundColor: colors.bgError,
         justifyContent: "center",
         alignItems: "center"
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Ionicons } from "@expo/vector-icons"
 import ActionButton from "../Common/ActionButton"
+import colors from "../../assets/colors"
 class InputBar extends Component {
     render() {
         return (
@@ -11,7 +12,7 @@ class InputBar extends Component {
             <View style={styles.inputFieldContainer}>
                 <TextInput onChangeText={this.props.onInputChange} style={styles.inputField} placeholder="Enter Book Name" placeholderTextColor="grey">
                 </TextInput>
-                <ActionButton style={{ backgroundColor: '#a5deba' }} onPress={this.props.confirm}>
+                <ActionButton style={{ backgroundColor: colors.bgSuccess }} onPress={this.props.confirm}>
                     <Ionicons name="ios-checkmark" color="white" size={40}>
                     </Ionicons>
                 </ActionButton>
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     },
     inputField: {
         flex: 1,
-        backgroundColor: "#ececec",
+        backgroundColor: colors.bgTextInput,
         paddingLeft: 5
     },
 
