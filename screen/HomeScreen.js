@@ -4,7 +4,7 @@ import BookCount from "../components/Footer/BookCount"
 import InputBar from "../components/InputBar/InputBar"
 import ActionButton from "../components/Common/ActionButton"
 import colors from "../assets/colors"
-
+import * as firebase from "firebase/app"
 
 export default class HomeScreen extends React.Component {
     constructor() {
@@ -15,8 +15,17 @@ export default class HomeScreen extends React.Component {
             readCount: 0,
             isAddNewBookVisible: false,
             value: "",
-            books: []
+            books: [],
+            booksReading: [],
+            booksRead: [],
+            currentUser: {}
         }
+    }
+    componentDidMount = async () => {
+        const { navigation } = this.props
+        const user = navigation.getParam('user')
+        const currentUserData = await firebase.database.ref('users/').child(user.uid).once('value')
+        this.setState({ currentUser: currentUserData.val() })
     }
 
     handleOnChange = (e) => {
@@ -30,22 +39,42 @@ export default class HomeScreen extends React.Component {
     cancelAddBook = () => {
         this.setState({ isAddNewBookVisible: false })
     }
-    confirmAddBook = (name) => {
-        this.setState((state, props) => ({
-            book: [...state.books, book],
-            totalCount: state.totalCount + 1,
-            readingCount: state.readingCount + 1
-        }))
-        this.setState({ isAddNewBookVisible: false })
+    confirmAddBook = async (book) => {
+        try {
+            const snapshot = await firebase.database.ref('books').child(this.state.currentUser.uid).orderByChild('name').equalTo(book).once("value")
+            if (snapshot.exist()) {
+                alert("Unable to add as book already exist")
+            }
+            else {
+                const key = await firebase.database.ref('books').child(this.state.currentUser.uid).push().key
+                const response = await firebase.database().ref('books').child(this.state.currentUser.uid).child(key).set({ name: book, read: false })
+                this.setState((state, props) => ({
+                    book: [...state.books, book],
+                    booksReading: [...state.booksReading, book],
+                    // totalCount: state.totalCount + 1,
+                    // readingCount: state.readingCount + 1,
+                    isAddNewBookVisible: false
+                }))
+                this.setState({ isAddNewBookVisible: false })
+            }
+
+        }
+        catch (error) {
+            console.log(error)
+        }
+
     }
     markAsRead = (selectedBook, index) => {
         let newList = this.state.books.filter(book => {
             book !== selectedBook
         })
+        let booksReading = this.state.booksReading.filter(book => book !== selectedBook)
         this.setState(preveState => ({
             books: newList,
-            readingCount: preveState.readingCount - 1,
-            readCount: preveState.readCount + 1
+            booksReading: booksReading,
+            booksRead: [...preveState.booksRead, selectedBook],
+            // readingCount: preveState.readingCount - 1,
+            // readCount: preveState.readCount + 1
         }))
     }
     renderItem = (item, index) => (
@@ -70,7 +99,7 @@ export default class HomeScreen extends React.Component {
         </View>
     )
     render() {
-        const { totalCount, readingCount, readCount, isAddNewBookVisible } = this.state
+        const { totalCount, readingCount, readCount, isAddNewBookVisible, books, booksReading, booksRead } = this.state
         return (
             <View style={{ flex: 1 }}>
                 <SafeAreaView style={{ backgroundColor: 'red' }} />
@@ -103,9 +132,9 @@ export default class HomeScreen extends React.Component {
           </TouchableOpacity> */}
                 </View>
                 <View style={styles.bottomBarContainer}>
-                    <BookCount title="Book Title" count={totalCount}></BookCount>
-                    <BookCount title="Reading" count={readingCount}></BookCount>
-                    <BookCount title="Read" count={readCount}></BookCount>
+                    <BookCount title="Total Books" count={books.length}></BookCount>
+                    <BookCount title="Reading" count={booksReading.length}></BookCount>
+                    <BookCount title="Read" count={booksRead.length}></BookCount>
                 </View>
                 <SafeAreaView style={{ backgroundColor: 'white' }} />
             </View >

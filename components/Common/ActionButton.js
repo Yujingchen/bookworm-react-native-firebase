@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 ActionButton.propTypes = {
     onPress: PropTypes.func.isRequired,
     children: PropTypes.element.isRequired,
-    style: PropTypes.object
+    style: PropTypes.oneOfTypes([PropTypes.object, PropTypes.array])
 }
 
 ActionButton.defaultProps = {
