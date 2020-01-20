@@ -19,6 +19,7 @@ import CustomDrawerComponent from "./screen/DrawerNavigator/CustomDrawerComponen
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import BooksCountContainer from "./redux/containers/BooksCountContainer"
+import { ActionSheetProvider } from "@expo/react-native-action-sheet"
 const HomeTabNavigator = createBottomTabNavigator({
   HomeScreen: {
     screen: HomeScreen,
@@ -190,7 +191,9 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <AppContainer></AppContainer>
+        <ActionSheetProvider>
+          <AppContainer></AppContainer>
+        </ActionSheetProvider>
 
       </Provider>
 

@@ -10,6 +10,9 @@ import { Ionicons } from '@expo/vector-icons';
 import ListItem from "../components/Common/ListItem"
 import * as Animatabale from "react-native-animatable"
 import { connect } from "react-redux"
+import Swipeout from "react-native-swipeout"
+import { compose } from "redux"
+import { connectActionSheet } from "@expo/react-native-action-sheet"
 class HomeScreen extends React.Component {
     constructor() {
         super()
@@ -120,37 +123,141 @@ class HomeScreen extends React.Component {
 
         catch (error) {
             console.log(error)
+            this.props.toogleIsLoadingBooks(false)
         }
     }
-    renderItem = (item, index) => (
-        <ListItem item={item}>
-            {item.read ?
-                <Ionicons name="ios-checkmark" color={colors.logoColor} size={30}></Ionicons> : (
-                    <ActionButton onPress={() => this.markAsRead(item, index)} style={{ width: 100, backgroundColor: colors.bgSuccess }} >
-                        <Text style={{ fontWeight: 'bold', color: "white" }}>Mark as read</Text>
-                    </ActionButton>)}
-        </ListItem>
+
+    markAsUnread = async (selectedBook, index) => {
+        try {
+            this.props.toogleIsLoadingBooks(true)
+            await firebase.database().ref('books').child(this.state.currentUser.uid).child(selectedBook.key).update({ read: false })
+            const user = this.props.navigation.getParam('user')
+            const currentUserData = await firebase.database().ref('/users/' + user.uid).once('value')
+            const books = await firebase.database().ref('books').child(user.uid).once('value')
+            this.props.markBookAsUnread(selectedBook)
+            this.props.toogleIsLoadingBooks(false)
+        }
+        catch (error) {
+            console.log(error)
+            this.props.isLoadingBooks(false)
+        }
+    }
+
+    deleteBook = async (selectedBook, index) => {
+        console.log("deleting book")
+        this.props.toogleIsLoadingBooks(true)
+        await firebase.database().ref('books').child(this.state.currentUser.uid).child(selectedBook.key).remove()
+        this.props.deleteBook(selectedBook)
+        this.props.toogleIsLoadingBooks(false)
+    }
+    catch(error) {
+        console.log(error)
+        this.props.isLoadingBooks(false)
+    }
+
+    openImageLibrary=async(selectedBook)=>{
+        
+    }
+
+    openCamera = async(selectedBook)=>{
+
+    }
+
+    addBookImage = (selectedBook) => {
+        const options = ['Select from Photos', 'Camera', 'Cancel']
+        const cancelButtonIndex = 2;
+        this.props.showActionSheetWithOptions(
+            {
+                options,
+                cancelButtonIndex,
+            }
+        ),
+            buttonIndex => {
+                if (buttonIndex == 0) {
+                    this.openImageLibary(selectedBook)
+                }
+                else if (buttonIndex == 1) {
+                    this.openCamera(selectedBook)
+                }
+            }
+    }
+    renderItem = (item, index) => {
+        let swipeoutButtons = [
+            {
+                text: 'Delete',
+                component: (
+                    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                        <Ionicons name="ios-trash" size={24} color={colors.textWhite}>
+                        </Ionicons>
+                    </View>
+                ),
+                backgroundColor: colors.bgDelete,
+                onPress: () => this.deleteBook(item, index)
+            }
+        ]
+        if (!item.read) {
+            swipeoutButtons.unshift(
+                {
+                    text: 'Mark Read',
+                    component: (
+                        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                            <Text style={{ color: colors.textWhite }}> Mark as Read </Text>
+                        </View>
+                    ),
+                    backgroundColor: colors.bgSuccessDark,
+                    onPress: () => this.markAsRead(item, index)
+                }
+            )
+        }
+        else {
+            swipeoutButtons.unshift(
+                {
+                    text: 'Mark Unread',
+                    component: (
+                        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                            <Text style={{ color: colors.textWhite }}> Mark Unread </Text>
+                        </View>
+                    ),
+                    backgroundColor: colors.bgUnread,
+                    onPress: () => this.markAsUnread(item, index)
+                }
+            )
+        }
+        return (
+            <Swipeout backgroundColor={colors.bgMain} style={{ marginHorizontal: 5, marginVertical: 5 }}
+                right={swipeoutButtons} autoClose={true}>
+                < ListItem onPress={() => this.addBookImage(item)} marginVertical={0} item={item} editable={true}>
+                    {
+                        item.read &&
+                        (<Ionicons name="ios-checkmark" color={colors.logoColor} size={30}></Ionicons>)
+                    }
+                </ListItem >
+            </Swipeout>
+        )
+
+    }
 
 
-        // <View style={{
-        //     minHeight: 100, flexDirection: "row", backgroundColor: colors.listItemBg, alignItems: "center",
-        //     marginVertical: 5
-        // }}>
-        //     <View style={{ height: 70, width: 70, marginLeft: 10 }}>
-        //         <Image source={require("../assets/icon.png")} style={{ flex: 1, height: null, width: null, borderRadius: 35 }}></Image>
 
-        //     </View>
+    // <View style={{
+    //     minHeight: 100, flexDirection: "row", backgroundColor: colors.listItemBg, alignItems: "center",
+    //     marginVertical: 5
+    // }}>
+    //     <View style={{ height: 70, width: 70, marginLeft: 10 }}>
+    //         <Image source={require("../assets/icon.png")} style={{ flex: 1, height: null, width: null, borderRadius: 35 }}></Image>
 
-        //     <View style={{ flex: 1, justifyContent: 'center', paddingLeft: 5 }}>
-        //         <Text style={{
-        //             fontWeight: 100,
-        //             fontSize: 22,
-        //             color: colors.textWhite
-        //         }}>{item.name}</Text>
-        //     </View>
+    //     </View>
 
-        // </View>
-    )
+    //     <View style={{ flex: 1, justifyContent: 'center', paddingLeft: 5 }}>
+    //         <Text style={{
+    //             fontWeight: 100,
+    //             fontSize: 22,
+    //             color: colors.textWhite
+    //         }}>{item.name}</Text>
+    //     </View>
+
+    // </View>
+
     render() {
         const { totalCount, readingCount, readCount, isAddNewBookVisible, books, booksReading, booksRead, value } = this.state
         return (
@@ -247,15 +354,26 @@ const mapDispatchToPros = dispatch => {
                 type: 'Mark_BOOK_AS_READ',
                 payload: book,
             }),
+        markBookAsUnread: book =>
+            dispatch({
+                type: "Mark_BOOK_AS_UNREAD",
+                payload: book
+            }),
         addBook: book =>
             dispatch({ type: 'ADD_BOOK', payload: book }),
+        deleteBook: book =>
+            dispatch({ type: "DELETE_BOOK", payload: book }),
         toogleIsLoadingBooks: bool =>
             dispatch({ type: "TOGGLE_IS_LOADING_BOOKS", payload: bool })
+
     }
 }
+const wrapper = compose(
+    connect(mapStateToPros, mapDispatchToPros),
+    connectActionSheet
 
-export default connect(mapStateToPros, mapDispatchToPros)(HomeScreen)
-
+)
+export default wrapper(HomeScreen)
 //style
 const styles = StyleSheet.create({
     container: {

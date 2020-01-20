@@ -9,7 +9,10 @@ const colors = {
     logoColor: "#bada55",
     bgMain: "#2E424D",
     textWhite: "white",
-    listItemBg: "#354D58DA"
+    listItemBg: "#354D58DA",
+    bgDelete: "#6E3C3CDA",
+    bgSuccessDark: "#3C6E47DA",
+    bgUnread: "#436E81"
 }
 
 export default colors;
