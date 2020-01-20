@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native"
-import ActionButton from "../components/Common/ActionButton"
+import ActionButton from "../../components/Common/ActionButton"
 import colors from "../../assets/colors"
 import * as firebase from "firebase"
 
@@ -11,7 +11,7 @@ class LoadingScreen extends Component {
         this.checkIfLoggedIn()
     }
     checkIfLoggedIn = () => {
-        this.unsubscribe = firsebase.auth().onAuthStateChanged((user) => {
+        this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.props.navigation.navigate('HomeScreen', { user })
             }
@@ -27,8 +27,8 @@ class LoadingScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text><ActivityIndicator size="large" color={colors.logoColor}></ActivityIndicator></Text>
-                <ActionButton title="Sign up" onpress={() => this.props.navigation.navigate('WelcomeScreen')} style={{ width: 200, backgroundColor: 'transparent', borderWidth: 0.5, borderColor: colors.bgError }}>
+                <ActivityIndicator size="large" color={colors.logoColor}></ActivityIndicator>
+                <ActionButton title="Sign up" onPress={() => this.props.navigation.navigate('WelcomeScreen')} style={{ width: 200, backgroundColor: 'transparent', borderWidth: 0.5, borderColor: colors.bgError }}>
                     <Text style={{ fontWeight: "100", color: "white" }}>Log out</Text>
                 </ActionButton>
             </View>

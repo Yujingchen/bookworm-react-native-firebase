@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 const BookCount = (props) => {
     return (
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-            <Text style={{ fontSize: 20 }}>{props.title}}</Text>
+            <Text style={{ fontSize: 20 }}>{props.title}</Text>
             <Text>{props.count}</Text>
         </View>
     );

@@ -1,16 +1,18 @@
-import React from "./node_modules/react"
-import { View, Text, StyleSheet, TouchableOpacity, style } from "react-native"
-import PropTypes from "./node_modules/prop-types"
+import React from "react"
+import { View, StyleSheet, TouchableOpacity, style } from "react-native"
+import PropTypes from "prop-types"
 import colors from "../../assets/colors"
 getPosition = (position) => {
     switch (position) {
         case 'left':
             return {
-                position: "absolute", left: 20, bottom: 20
+                position: "absolute", bottom: 270, left: 20, elevation: 3,
+
             }
         default:
             return {
-                position: "absolute", right: 20, bottom: 20
+                position: "absolute", bottom: 270, right: 20, elevation: 3,
+
             }
     }
 }
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
 ActionButton.propTypes = {
     onPress: PropTypes.func.isRequired,
     children: PropTypes.element.isRequired,
-    style: PropTypes.oneOfTypes([PropTypes.object, PropTypes.array])
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 }
 
 ActionButton.defaultProps = {

@@ -1,5 +1,4 @@
-
-export const firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyBFFN328pBPo1hrq43YZEN39PB6cA0MN34",
     authDomain: "book-worm-6892f.firebaseapp.com",
     databaseURL: "https://book-worm-6892f.firebaseio.com",
@@ -9,3 +8,5 @@ export const firebaseConfig = {
     appId: "1:949961539935:web:51e36480d447bee62ab6ea",
     measurementId: "G-21M8GCX7RQ"
 };
+
+export default firebaseConfig

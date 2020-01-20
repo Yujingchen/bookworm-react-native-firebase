@@ -43,26 +43,27 @@ class LoginScreen extends Component {
 
     onSignUp = async () => {
         if (this.state.email && this.state.password) {
-            this.setState({ isLoading: true })
+            this.setState({ isLoading: true });
             try {
-                const response = await firebase.auth()
-                    .createUserWithEmailAndPassword(this.state.email,
-                        this.state.password)
-                if (response) {
-                    this.setState({ isLoading: false })
-                    const user = await firebase.database.ref('users/').child(response.user.uid).set({ email: response.user.email, uid: response.user.uid })
-                    this.props.navigation.navigate('LoadingScreen')
-                    // this.onSignIn(this.state.email, this.state.password)
+                const response = await firebase
+                    .auth()
+                    .createUserWithEmailAndPassword(
+                        this.state.email,
+                        this.state.password
+                    );
+                this.setState({ isLoading: false });
+                this.onSignIn(this.state.email, this.state.password);
+            } catch (err) {
+                if (err.code == 'auth/email-already-in-use') {
+                    alert('Email already in use, Please try logging in.');
                 }
-            } catch (error) {
-                this.setState({ isLoading: false })
-                if (error.code == "auth/email-already-in-use") {
-                    alter('User already Exists. Try Loggin in')
-                }
+                console.log('Error on async call ', err);
+                console.log('Error is ', err.code);
+                this.setState({ isLoading: false });
             }
-        }
-        else {
-            alert('Please enter email and password');
+        } else {
+            alert('Please enter the both email and password to register.');
+            this.setState({ isLoading: false });
         }
     };
 
@@ -75,10 +76,8 @@ class LoginScreen extends Component {
                 <View style={{ flex: 1, justifyContent: "center" }}>
                     <TextInput
                         style={styles.textInput} placeholder="abc@example.com" placeholderTextColor={colors.bgTextInputDark} keyboardType="email-address" onChangeText={email => this.setState({ email })}></TextInput>
-                    <Text>LoginScreen</Text>
                     <TextInput
-                        style={styles.textInput} placeholder="enter password" placeholderTextColor={colors.bgTextInputDark} secureTextEntry onChangeText={email => this.setState({ password })}></TextInput>
-                    <Text>LoginScreen</Text>
+                        style={styles.textInput} placeholder="enter password" placeholderTextColor={colors.bgTextInputDark} secureTextEntry onChangeText={password => this.setState({ password })}></TextInput>
                     <View style={{ alignItems: 'center' }}>
                         <ActionButton style={[styles.loginButton, { borderColor: colors.bgPrimary }]} onPress={this.onSignIn}>
                             <Text style={{ color: 'white' }}>Login</Text>

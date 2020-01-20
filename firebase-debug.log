@@ -1,0 +1,32 @@
+[debug] [2020-01-09T14:56:07.955Z] ----------------------------------------------------------------------
+[debug] [2020-01-09T14:56:07.963Z] Command:       /usr/local/bin/node /usr/local/bin/firebase projects:addfirebase book-worm-6892f
+[debug] [2020-01-09T14:56:07.964Z] CLI Version:   7.11.0
+[debug] [2020-01-09T14:56:07.964Z] Platform:      darwin
+[debug] [2020-01-09T14:56:07.964Z] Node Version:  v10.16.3
+[debug] [2020-01-09T14:56:07.986Z] Time:          Thu Jan 09 2020 22:56:07 GMT+0800 (China Standard Time)
+[debug] [2020-01-09T14:56:07.986Z] ----------------------------------------------------------------------
+[debug] [2020-01-09T14:56:07.987Z] 
+[debug] [2020-01-09T14:56:08.037Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-01-09T14:56:08.038Z] > authorizing via signed-in user
+[debug] [2020-01-09T14:56:08.053Z] >>> HTTP REQUEST POST https://firebase.googleapis.com/v1beta1/projects/book-worm-6892f:addFirebase  
+ 
+[debug] [2020-01-09T14:56:11.446Z] <<< HTTP RESPONSE 409
+[debug] [2020-01-09T14:56:11.447Z] <<< HTTP RESPONSE BODY
+[debug] [2020-01-09T14:56:11.453Z] HTTP Error: 409, Requested entity already exists
+[debug] [2020-01-09T14:56:12.582Z] FirebaseError: HTTP Error: 409, Requested entity already exists
+    at module.exports (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:38:12)
+    at Request._callback (/usr/local/lib/node_modules/firebase-tools/lib/api.js:39:35)
+    at Request.self.callback (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:185:22)
+    at Request.emit (events.js:198:13)
+    at Request.EventEmitter.emit (domain.js:448:20)
+    at Request.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1161:10)
+    at Request.emit (events.js:198:13)
+    at Request.EventEmitter.emit (domain.js:448:20)
+    at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1083:12)
+    at Object.onceWrapper (events.js:286:20)
+    at IncomingMessage.emit (events.js:203:15)
+    at IncomingMessage.EventEmitter.emit (domain.js:448:20)
+    at endReadableNT (_stream_readable.js:1145:12)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+[error] 
+[error] Error: Failed to add Firebase to Google Cloud Platform project. See firebase-debug.log for more info.

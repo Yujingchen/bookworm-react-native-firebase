@@ -4,22 +4,33 @@ import ActionButton from "../components/Common/ActionButton"
 import colors from "../assets/colors"
 import * as firebase from "firebase/app"
 import 'firebase/auth'
+import { YellowBox } from 'react-native';
+import _ from 'lodash';
 
+YellowBox.ignoreWarnings(['Setting a timer']);
+const _console = _.clone(console);
+console.warn = message => {
+    if (message.indexOf('Setting a timer') <= -1) {
+        _console.warn(message);
+    }
+};
 class SettingsScreen extends Component {
     signOut = async () => {
+        console.log('Try to sign out')
         try {
             await firebase.auth().signOut()
             this.props.navigation.navigate('WelcomeScreen')
+            console.log('Sign successfully')
         }
         catch (error) {
-            alert('Unable to sign out')
+            console.log('Unable to sign out')
         }
     }
+
     render() {
         return (
             <View style={styles.container}>
-                <Text>SettingsScreen</Text>
-                <ActionButton title="Sign up" onpress={() => this.signOut} style={{ width: 200, backgroundColor: 'transparent', borderWidth: 0.5, borderColor: colors.bgError }}>
+                <ActionButton title="Sign up" onPress={() => this.signOut()} style={styles.auth_button}>
                     <Text style={{ fontWeight: "100", color: "white" }}>Log out</Text>
                 </ActionButton>
             </View>
@@ -35,5 +46,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.bgMain
+    },
+    auth_button: {
+        width: 200,
+        backgroundColor: 'transparent',
+        borderWidth: 0.5,
+        borderColor: colors.bgError
     }
 })
