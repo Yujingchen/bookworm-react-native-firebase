@@ -5,12 +5,13 @@ import colors from "../../assets/colors"
 import * as firebase from "firebase"
 
 import 'firebase/auth'
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 class LoadingScreen extends Component {
     componentDidMount() {
+        this._isMounted = true;
         this.checkIfLoggedIn()
     }
     checkIfLoggedIn = () => {
+        //onAuth listener, which is connected to firebase auth, everytime user login this will check if user login
         this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.props.navigation.navigate('HomeScreen', { user })
@@ -21,7 +22,8 @@ class LoadingScreen extends Component {
         })
     }
 
-    componentWillUnmount = () => {
+    UNSAFE_componentWillUnMount = () => {
+        this._isMounted = false;
         this.unsubscribe();
     }
     render() {

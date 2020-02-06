@@ -13,6 +13,8 @@ import { connect } from "react-redux"
 import Swipeout from "react-native-swipeout"
 import { compose } from "redux"
 import { connectActionSheet } from "@expo/react-native-action-sheet"
+import * as ImageHelpers from "../helper/ImageHelpers"
+import "firebase/storage"
 class HomeScreen extends React.Component {
     constructor() {
         super()
@@ -154,13 +156,46 @@ class HomeScreen extends React.Component {
         console.log(error)
         this.props.isLoadingBooks(false)
     }
+    uploadImage = async (image, selectedBook) => {
+        console.log(image.uri)
+        const ref = firebase.storage().ref('books').child(this.state.currentUser.uid).child(selectedBook.key)
 
-    openImageLibrary=async(selectedBook)=>{
-        
+        try {
+            //converting to blob
+            const blobImage = await ImageHelpers.prepareBlob(image.uri)
+            console.log(blobImage)
+            const snapshot = await ref.put(blobImage)
+            //put blob image in storage
+            let downloadUrl = await ref.getDownloadURL()
+            await firebase.database().ref('books')
+                .child(this.state.currentUser.uid).child(selectedBook.key)
+                .update({ image: downloadUrl })
+            // downloadUrl into database
+            blobImage.close()
+            return downloadUrl
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+    openImageLibrary = async (selectedBook) => {
+        const result = await ImageHelpers.openImageLibrary();
+        if (result) {
+            this.props.toogleIsLoadingBooks(true)
+            const downloadUrl = await this.uploadImage(result, selectedBook)
+            this.props.updateBookImage({...selectedBook, uri: downloadUrl})
+            this.props.toogleIsLoadingBooks(false)
+        }
     }
 
-    openCamera = async(selectedBook)=>{
-
+    openCamera = async (selectedBook) => {
+        const result = await ImageHelpers.openCamera()
+        if (result) {
+            this.props.toogleIsLoadingBooks(true)
+            const downloadUrl = await this.uploadImage(result, selectedBook)
+            this.props.updateBookImage({...selectedBook, uri: downloadUrl})
+            this.props.toogleIsLoadingBooks(false)
+        }
     }
 
     addBookImage = (selectedBook) => {
@@ -170,16 +205,17 @@ class HomeScreen extends React.Component {
             {
                 options,
                 cancelButtonIndex,
-            }
-        ),
+            },
+
             buttonIndex => {
                 if (buttonIndex == 0) {
-                    this.openImageLibary(selectedBook)
+                    this.openImageLibrary(selectedBook)
                 }
                 else if (buttonIndex == 1) {
                     this.openCamera(selectedBook)
                 }
             }
+        )
     }
     renderItem = (item, index) => {
         let swipeoutButtons = [
@@ -364,8 +400,8 @@ const mapDispatchToPros = dispatch => {
         deleteBook: book =>
             dispatch({ type: "DELETE_BOOK", payload: book }),
         toogleIsLoadingBooks: bool =>
-            dispatch({ type: "TOGGLE_IS_LOADING_BOOKS", payload: bool })
-
+            dispatch({ type: "TOGGLE_IS_LOADING_BOOKS", payload: bool }),
+        updateBookImage: book => dispatch({ type: "UPDATE_BOOK_IMAGE", payload: book })
     }
 }
 const wrapper = compose(

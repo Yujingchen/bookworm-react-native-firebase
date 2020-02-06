@@ -6,7 +6,8 @@ const firebaseConfig = {
     storageBucket: "book-worm-6892f.appspot.com",
     messagingSenderId: "949961539935",
     appId: "1:949961539935:web:51e36480d447bee62ab6ea",
-    measurementId: "G-21M8GCX7RQ"
+    measurementId: "G-21M8GCX7RQ",
+    storageBucket: "book-worm-6892f.appspot.com",
 };
 
 export default firebaseConfig
