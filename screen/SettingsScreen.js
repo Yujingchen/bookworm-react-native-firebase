@@ -16,11 +16,9 @@ console.warn = message => {
 };
 class SettingsScreen extends Component {
     signOut = async () => {
-        console.log('Try to sign out')
         try {
             await firebase.auth().signOut()
             this.props.navigation.navigate('WelcomeScreen')
-            console.log('Sign successfully')
         }
         catch (error) {
             console.log('Unable to sign out')

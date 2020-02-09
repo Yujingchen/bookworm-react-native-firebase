@@ -46,7 +46,6 @@ export const prepareBlob = async imageUri => {
     const blob = await new Promise((resolve, reject) => {
         const xml = new XMLHttpRequest()
         xml.onload = function () {
-            console.log("preparing")
             resolve(xml.response)
         }
         xml.onerror = function (e) {

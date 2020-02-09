@@ -9,12 +9,25 @@ const BooksCountContainer = ({ color, type, ...props }) => {
     return (
         <View style={styles.container}>
             <Text style={{ color: color }}>
-                {props.books[type].length || 0}
-
+                {tabImage(type)}
             </Text>
         </View>
     );
 }
+
+
+tabImage = (type) => {
+    if (type === "Collections") {
+        return <Ionicons name="ios-folder" color={colors.logoColor} size={10}></Ionicons>
+    }
+    else if (type === "Complete") {
+        return <Ionicons name="ios-checkmark" color={colors.logoColor} size={20}></Ionicons>
+    }
+    else if (type === "Books") {
+        return <Ionicons name="ios-checkmark" color={colors.logoColor} size={20}></Ionicons>
+    }
+}
+
 
 BooksCountContainer.propTypes = {
     color: PropTypes.string,

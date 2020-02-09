@@ -20,11 +20,12 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import BooksCountContainer from "./redux/containers/BooksCountContainer"
 import { ActionSheetProvider } from "@expo/react-native-action-sheet"
+
 const HomeTabNavigator = createBottomTabNavigator({
   HomeScreen: {
     screen: HomeScreen,
     navigationOptions: {
-      tabBarLabel: 'Total Books',
+      tabBarLabel: 'Books',
       tabBarIcon: ({ tintColor }) => (
         <BooksCountContainer
           color={tintColor} type="books">
@@ -35,10 +36,10 @@ const HomeTabNavigator = createBottomTabNavigator({
   BooksReadingScreen: {
     screen: BooksReadingScreen,
     navigationOptions: {
-      tabBarLabel: 'Books Reading',
+      tabBarLabel: 'Collection',
       tabBarIcon: ({ tintColor }) => (
         <BooksCountContainer
-          color={tintColor} type="booksReading">
+          color={tintColor} type="books">
         </BooksCountContainer>
       ),
     }
@@ -46,7 +47,7 @@ const HomeTabNavigator = createBottomTabNavigator({
   BooksReadScreen: {
     screen: BooksReadScreen,
     navigationOptions: {
-      tabBarLabel: 'Books Read',
+      tabBarLabel: 'Complete',
       tabBarIcon: ({ tintColor }) => (
         <BooksCountContainer
           color={tintColor} type="booksRead">
@@ -71,15 +72,15 @@ HomeTabNavigator.navigationOptions = ({ navigation }) => {
   switch (routeName) {
     case 'HomeScreen':
       return {
-        headerTitle: 'Total Books'
+        headerTitle: 'Home   '
       }
     case 'BooksReadingScreen':
       return {
-        headerTitle: "Books Reading"
+        headerTitle: "Books Collection"
       }
     case 'BooksReadScreen':
       return {
-        headerTitle: "Books Read"
+        headerTitle: "Finish reading  "
       }
     default:
       return {
@@ -113,7 +114,7 @@ const AppDrawerNavigator = createDrawerNavigator({
   HomeStackNavigator: {
     screen: HomeStackNavigator,
     navigationOptions: {
-      title: "Home",
+      title: "Home ",
       drawerIcon: () => <Ionicons name="ios-home" size={24}></Ionicons>
     }
   },
