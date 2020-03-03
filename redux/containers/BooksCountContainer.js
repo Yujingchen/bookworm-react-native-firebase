@@ -17,15 +17,16 @@ const BooksCountContainer = ({ color, type, ...props }) => {
 
 
 tabImage = (type) => {
-    if (type === "Collections") {
-        return <Ionicons name="ios-folder" color={colors.logoColor} size={10}></Ionicons>
+    if (type == "Home") {
+        return <Ionicons name="ios-search" color={colors.logoColor} size={20}></Ionicons>
     }
-    else if (type === "Complete") {
-        return <Ionicons name="ios-checkmark" color={colors.logoColor} size={20}></Ionicons>
+    else if (type == "collection") {
+        return <Ionicons name="ios-folder" color={colors.logoColor} size={20}></Ionicons>
     }
-    else if (type === "Books") {
-        return <Ionicons name="ios-checkmark" color={colors.logoColor} size={20}></Ionicons>
+    else if (type == "Done") {
+        return <Ionicons name="ios-heart" color={colors.logoColor} size={20}></Ionicons>
     }
+    return null
 }
 
 

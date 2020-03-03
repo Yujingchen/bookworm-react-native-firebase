@@ -8,7 +8,7 @@ class InputBar extends Component {
     render() {
         return (
             <View style={styles.inputFieldContainer}>
-                <TextInput onChangeText={() => this.props.handleTextChange()} style={styles.inputField}
+                <TextInput onChangeText={(text) => this.props.handleTextChange(text)} style={styles.inputField}
                     placeholder="Enter Book Name" placeholderTextColor={this.props.placeholderTextColor}>
                 </TextInput>
                 <ActionButton style={{ backgroundColor: colors.bgSuccess }} onPress={this.props.searchBooks}>

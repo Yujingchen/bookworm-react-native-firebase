@@ -25,21 +25,20 @@ const HomeTabNavigator = createBottomTabNavigator({
   HomeScreen: {
     screen: HomeScreen,
     navigationOptions: {
-      tabBarLabel: 'Books',
-      tabBarIcon: ({ tintColor }) => (
+      tabBarIcon: () => (
         <BooksCountContainer
-          color={tintColor} type="books">
+          color={"white"} type="Home">
         </BooksCountContainer>
       )
     },
+
   },
   BooksReadingScreen: {
     screen: BooksReadingScreen,
     navigationOptions: {
-      tabBarLabel: 'Collection',
-      tabBarIcon: ({ tintColor }) => (
+      tabBarIcon: () => (
         <BooksCountContainer
-          color={tintColor} type="books">
+          type="collection">
         </BooksCountContainer>
       ),
     }
@@ -47,10 +46,9 @@ const HomeTabNavigator = createBottomTabNavigator({
   BooksReadScreen: {
     screen: BooksReadScreen,
     navigationOptions: {
-      tabBarLabel: 'Complete',
-      tabBarIcon: ({ tintColor }) => (
+      tabBarIcon: () => (
         <BooksCountContainer
-          color={tintColor} type="booksRead">
+          type="Done">
         </BooksCountContainer>
       )
     }
@@ -59,10 +57,14 @@ const HomeTabNavigator = createBottomTabNavigator({
   {
     tabBarOptions: {
       style: {
-        backgroundColor: colors.bgMain
+        backgroundColor: "#ffffff",
+        alignItems: "center",
+        justifyContent: "center"
       },
-      activeTintColor: colors.logoColor,
-      inactiveTintColor: colors.bgTextInput
+      activeTintColor: "#ffffff",
+      inactiveTintColor: "#000000",
+      showLabel: false,
+      labelPosition: "below-icon"
     }
   }
 )
@@ -72,7 +74,7 @@ HomeTabNavigator.navigationOptions = ({ navigation }) => {
   switch (routeName) {
     case 'HomeScreen':
       return {
-        headerTitle: 'Home   '
+        headerTitle: 'Home',
       }
     case 'BooksReadingScreen':
       return {
@@ -95,7 +97,7 @@ const HomeStackNavigator = createStackNavigator({
     navigationOptions: ({ navigation }) => {
       return {
         headerLeft: (
-          <Ionicons name="ios-menu" size={30} color={colors.logoColor} onPress={() => navigation.openDrawer()} style={{ marginLeft: 10 }} />
+          <Ionicons name="ios-menu" size={30} color={"white"} onPress={() => navigation.openDrawer()} style={{ marginLeft: 10 }} />
         )
       }
     }

@@ -48,8 +48,7 @@ export const prepareBlob = async imageUri => {
         xml.onload = function () {
             resolve(xml.response)
         }
-        xml.onerror = function (e) {
-            console.log(e)
+        xml.onerror = function () {
             reject(new TypeError('Image Upload failed'))
         }
         //set the response type to be blob image type

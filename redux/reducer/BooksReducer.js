@@ -1,6 +1,7 @@
 import {
     LOAD_BOOKS_FROM_SERVER, Mark_BOOK_AS_READ, Mark_BOOK_AS_UNREAD,
-    ADD_BOOK, DELETE_BOOK, TOGGLE_IS_LOADING_BOOKS, UPDATE_BOOK_IMAGE, SEARCH_BOOK
+    ADD_BOOK, DELETE_BOOK, TOGGLE_IS_LOADING_BOOKS, UPDATE_BOOK_IMAGE, SEARCH_BOOK,
+    SEARCH_MORE_BOOK
 } from "../action/ActionTypes"
 const initialState = {
     books: [],
@@ -88,10 +89,9 @@ const books = (state = initialState, action) => {
         case SEARCH_BOOK:
             const fetchedBooks = formatResponseData(action.payload)
             return { ...state, queryItems: fetchedBooks };
-        case "GET_BOOK":
-            return { ...state, book: action.payload };
-        case "SEARCH_MORE_BOOK":
-            return { ...state, result: action.payload };
+        case SEARCH_MORE_BOOK:
+            const fetchedMoreBooks = formatResponseData(action.payload)
+            return { ...state, queryItems: fetchedMoreBooks };
         default:
             return state;
     }
@@ -107,7 +107,7 @@ const formatResponseData = (rawData) => {
                 read: false
             }
         }
-        else {
+        else {  
             return {
                 name: item.volumeInfo.title,
                 read: false

@@ -12,21 +12,20 @@ import { compose } from "redux"
 import { connectActionSheet } from "@expo/react-native-action-sheet"
 import {
     loadBooks, saveBookToCollection, addBook,
-    toogleIsLoadingBooks, HandleSearch
+    toogleIsLoadingBooks, HandleSearch, searchMoreBooks
 } from "../redux/action/BookAction"
 import "firebase/storage"
 class HomeScreen extends React.Component {
     constructor() {
         super()
         this.state = {
-            totalCount: 0,
-            readingCount: 0,
-            readCount: 0,
-            isAddNewBookVisible: false,
             value: "",
-            books: [],
-            booksReading: [],
-            booksRead: [],
+            result: [],
+            totalItems: 10,
+            loading: true,
+            loadingMore: false,
+            error: null,
+            refreshing: false,
             currentUser: {}
         }
         this.userId = firebase.auth().currentUser.uid
@@ -55,10 +54,32 @@ class HomeScreen extends React.Component {
         })
     }
     handleSearchBooks = async (bookName) => {
-        console.log(bookName)
-        this.setState({ value: '' });
         this.props.searchBook(bookName)
     }
+    handleSearchMoreBooks = async (bookName) => {
+        const { totalItems } = this.state
+        try {
+            this.setState(
+                (prevState, nextProps) => {
+                    if (prevState.totalItems <= 30) {
+                        return (
+                            {
+                                totalItems: prevState.totalItems + 10,
+                                loadingMore: true
+                            })
+                    }
+                },
+                () => {
+                    this.props.searchMoreBooks(bookName, totalItems);
+                }
+            );
+        }
+        catch (error) {
+            console.log("error")
+            this.setState({ loadingMore: false })
+        }
+    }
+
     saveBookToCollection = async (item) => {
         try {
             this.props.toogleIsLoadingBooks(true)
@@ -79,6 +100,20 @@ class HomeScreen extends React.Component {
         }
     }
 
+    handleRefresh = (bookName) => {
+        console.log(bookName)
+        this.setState(
+            {
+                totalItems: 10,
+                refreshing: true
+            },
+            () => {
+                console.log("pokk")
+                this.props.searchBook(bookName)
+            }
+        );
+    };
+
 
     renderItem = (item) => {
         let swipeoutButtons = [
@@ -94,7 +129,6 @@ class HomeScreen extends React.Component {
             }
         ]
 
-
         return (
             <Swipeout backgroundColor={colors.bgMain} style={{ marginHorizontal: 5, marginVertical: 5 }}
                 right={swipeoutButtons} autoClose={true}>
@@ -107,6 +141,31 @@ class HomeScreen extends React.Component {
             </Swipeout>
         )
     }
+
+    renderFooter = () => {
+        if (!this.state.loadingMore) {
+            console.log("not loading more")
+            return null;
+        }
+
+        return (
+            <View
+                style={{
+                    position: 'relative',
+                    paddingVertical: 20,
+                    marginTop: 10,
+                    marginBottom: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 1000,
+                    elevation: 1000,
+                    flex: 1,
+                }}
+            >
+                <ActivityIndicator animating size="large" />
+            </View>
+        );
+    };
     render() {
         const { value } = this.state
         return (
@@ -122,25 +181,23 @@ class HomeScreen extends React.Component {
                     }}>
                         <ActivityIndicator size="large" color={colors.logoColor}></ActivityIndicator>
                     </View>)}
-
                     <SearchBar handleTextChange={(text) => this.handleOnChange(text)} searchBooks={() => this.handleSearchBooks(value)} placeholderTextColor={colors.placeholderTextColor}></SearchBar>
                     <View style={styles.contentContainer}>
-                        <FlatList data={this.props.books.queryItems} renderItem={
-                            ({ item }, index) =>
-                                this.renderItem(item, index)}
+                        <FlatList data={this.props.books.queryItems}
+                            onEndReachedThreshold={0.5}
+                            onEndReached={() => this.handleSearchMoreBooks(value)}
+                            ListFooterComponent={this.renderFooter}
+                            onRefresh={() => this.handleRefresh(value)}
+                            refreshing={this.state.refreshing}
+                            renderItem={
+                                ({ item }, index) =>
+                                    this.renderItem(item, index)}
                             keyExtractor={(item, index) => index.toString()}
                             ListEmptyComponent={
                                 <View style={styles.warningMessage}>
                                     <Text style={{ fontWeight: "bold" }}>Enter book name to search books</Text>
                                 </View>
                             } />
-
-                        {/* {value.length > 0 ?
-                            <ActionButton onPress={() => this.searchBooks(value)}
-                                style={{ backgroundColor: "#AAD1E6", borderRadius: 25 }} position="right" >
-                                <Text style={{ color: "white", fontSize: 30 }}>+</Text>
-                            </ActionButton>
-                            : null} */}
                     </View>
                     <SafeAreaView />
                 </View>
@@ -169,11 +226,12 @@ const mapDispatchToProps = dispatch => ({
     toogleIsLoadingBooks: (bool) => {
         dispatch(toogleIsLoadingBooks(bool))
     },
-
     searchBook: (book) => {
         dispatch(HandleSearch(book))
+    },
+    searchMoreBooks: (book, totalNumber) => {
+        dispatch(searchMoreBooks(book, totalNumber))
     }
-
 })
 
 const wrapper = compose(
