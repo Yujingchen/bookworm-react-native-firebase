@@ -12,8 +12,9 @@ import { compose } from "redux"
 import { connectActionSheet } from "@expo/react-native-action-sheet"
 import {
     loadBooks, saveBookToCollection, addBook,
-    toogleIsLoadingBooks, HandleSearch, searchMoreBooks
-} from "../redux/action/BookAction"
+    toogleIsLoadingBooks,
+} from "../store/action/book"
+import { HandleSearch, searchMoreBooks } from "../store/action/search"
 import "firebase/storage"
 class HomeScreen extends React.Component {
     constructor() {

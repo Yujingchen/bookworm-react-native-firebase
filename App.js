@@ -17,8 +17,8 @@ import firebaseConfig from './config/config';
 import colors from './assets/colors';
 import CustomDrawerComponent from "./screen/DrawerNavigator/CustomDrawerComponent"
 import { Provider } from 'react-redux';
-import store from './redux/store';
-import BooksCountContainer from "./redux/containers/BooksCountContainer"
+import configureStore from './store/configureStore';
+import BooksCountContainer from "./store/containers/BooksCountContainer"
 import { ActionSheetProvider } from "@expo/react-native-action-sheet"
 
 const HomeTabNavigator = createBottomTabNavigator({
@@ -193,7 +193,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Provider store={store}>
+      <Provider store={configureStore}>
         <ActionSheetProvider>
           <AppContainer></AppContainer>
         </ActionSheetProvider>

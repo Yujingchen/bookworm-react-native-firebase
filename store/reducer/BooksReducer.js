@@ -2,7 +2,7 @@ import {
     LOAD_BOOKS_FROM_SERVER, Mark_BOOK_AS_READ, Mark_BOOK_AS_UNREAD,
     ADD_BOOK, DELETE_BOOK, TOGGLE_IS_LOADING_BOOKS, UPDATE_BOOK_IMAGE, SEARCH_BOOK,
     SEARCH_MORE_BOOK
-} from "../action/ActionTypes"
+} from "../action/actionTypes"
 const initialState = {
     books: [],
     booksReading: [],

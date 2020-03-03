@@ -15,7 +15,7 @@ import * as ImageHelpers from "../../helper/ImageHelpers"
 import {
     loadBooks, markBookAsRead, markBookAsUnread, addBook,
     deleteBook, toogleIsLoadingBooks, updateBookImage
-} from "../../redux/action/BookAction"
+} from "../../store/action/book"
 class BooksReadingScreen extends Component {
     constructor() {
         super()
