@@ -74,15 +74,15 @@ HomeTabNavigator.navigationOptions = ({ navigation }) => {
   switch (routeName) {
     case 'HomeScreen':
       return {
-        headerTitle: 'Home',
+        headerTitle: 'Home  ',
       }
     case 'BooksReadingScreen':
       return {
-        headerTitle: "Books Collection"
+        headerTitle: "Collection   "
       }
     case 'BooksReadScreen':
       return {
-        headerTitle: "Finish reading  "
+        headerTitle: "Favourite  "
       }
     default:
       return {

@@ -1,10 +1,15 @@
+import {
+    SEARCH_BOOK,
+    SEARCH_MORE_BOOK
+} from "./actionTypes"
+
 const axios = require('axios').default;
 export const HandleSearch = (keyword) => {
     try {
         return async (dispatch) => {
             const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${keyword}`);
             dispatch({
-                type: "SEARCH_BOOK",
+                type: SEARCH_BOOK,
                 payload: response.data.items
             })
         };
@@ -13,15 +18,15 @@ export const HandleSearch = (keyword) => {
         console.log(error)
     }
 };
-export const searchMoreBooks = (keyword, totalItems) => {
+export const searchMoreBooks = (keyword, amount) => {
     try {
         return async (dispatch) => {
-            console.log(`https://www.googleapis.com/books/v1/volumes?q=${keyword}&maxResults=${totalItems}`)
+            console.log(`https://www.googleapis.com/books/v1/volumes?q=${keyword}&maxResults=${amount}`)
             const response = await axios.get(
-                `https://www.googleapis.com/books/v1/volumes?q=${keyword}&maxResults=${totalItems}`
+                `https://www.googleapis.com/books/v1/volumes?q=${keyword}&maxResults=${amount}`
             );
             dispatch({
-                type: "SEARCH_MORE_BOOK",
+                type: SEARCH_MORE_BOOK,
                 payload: response.data.items
             });
         }

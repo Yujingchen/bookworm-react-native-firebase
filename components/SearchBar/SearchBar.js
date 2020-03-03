@@ -9,7 +9,7 @@ class InputBar extends Component {
         return (
             <View style={styles.inputFieldContainer}>
                 <TextInput onChangeText={(text) => this.props.handleTextChange(text)} style={styles.inputField}
-                    placeholder="Enter Book Name" placeholderTextColor={this.props.placeholderTextColor}>
+                    placeholder="Book name..." placeholderTextColor={this.props.placeholderTextColor}>
                 </TextInput>
                 <ActionButton style={{ backgroundColor: colors.bgSuccess }} onPress={this.props.searchBooks}>
                     <Ionicons name="ios-checkmark" color="white" size={40}>

@@ -102,13 +102,15 @@ const formatResponseData = (rawData) => {
     const data = rawData.map(item => {
         if (item.volumeInfo.imageLinks) {
             return {
+                id: item.id,
                 name: item.volumeInfo.title,
                 image: item.volumeInfo.imageLinks.smallThumbnail,
                 read: false
             }
         }
-        else {  
+        else {
             return {
+                id: item.id,
                 name: item.volumeInfo.title,
                 read: false
             }
