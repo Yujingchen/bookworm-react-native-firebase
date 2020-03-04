@@ -55,6 +55,9 @@ var styles = StyleSheet.create({
     padding: 5,
     fontSize: 22,
     fontWeight: "200",
+  },
+  safeArea: {
+    backgroundColor: 'red'
   }
 });
 
