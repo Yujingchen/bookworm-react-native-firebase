@@ -60,47 +60,26 @@ class HomeScreen extends React.Component {
     handleScroll = async (query) => {
         const { maxResults, startIndex, loadMore } = this.state
 
-        // if (loadMore) {
-        //     try {
-        //         loadingMore = true
-        //         fetchBook
-        //         if (maxResults <= 30) {
-        //             maxResults = maxResults + 10
-        //         }
-        //         else {
-        //             maxResults = 10
-        //             startIndex = startIndex + 1
-        //         }
-        //     }
-        //     catch {
-        //         loadMore = false,
-        //             loadingMore = false
-        //     }
-        //     fetchAgain(maxResults)
-        // }
+        if (loadMore) {
+            try {
+                this.setState({ loadingMore: true })
+                this.props.searchMoreBooks(query, maxResults, startIndex)
+                console.log(`Search with key word: ${query}, fetching ${maxResults} items, Index ${startIndex}`)
 
-        // if (loadMore) {
-        //     this.setState(
-        //         (prevState, nextProps) => {
-        //             return ({ maxResults: prevState.maxResults + 10, loadingMore: true })
-        //         },
-        //         () => {
-        //             console.log(`Search with key word: ${query}, fetching ${maxResults} items`)
-        //             if (maxResults < 40) {
-        //                 this.props.searchMoreBooks(query, maxResults)
-        //             }
-        //             else {
-        //                 this.props.searchMoreBooks(query, maxResults)
-        //                 this.setState({
-        //                     loadingMore: false
-        //                 })
-        //             }
-        //         }
-        //     );
-        // }
-        // else {
-        //     this.setState({ loadMore: false })
-        // }
+                this.setState((prevState) => {
+                    return {
+                        startIndex: prevState.startIndex + 1
+                    }
+                })
+            }
+            catch {
+                console.log("Fail to load more")
+                this.setState({
+                    loadMore: false,
+                    loadingMore: false
+                })
+            }
+        }
     }
 
     handleSave = async (item) => {
@@ -187,8 +166,8 @@ const mapDispatchToProps = dispatch => ({
     searchBook: (book) => {
         dispatch(HandleSearch(book))
     },
-    searchMoreBooks: (book, totalNumber) => {
-        dispatch(searchMoreBooks(book, totalNumber))
+    searchMoreBooks: (book, maxResults, startIndex) => {
+        dispatch(searchMoreBooks(book, maxResults, startIndex))
     }
 })
 

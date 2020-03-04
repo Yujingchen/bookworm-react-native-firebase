@@ -91,7 +91,7 @@ const books = (state = initialState, action) => {
             return { ...state, queryItems: fetchedBooks };
         case SEARCH_MORE_BOOK:
             const fetchedMoreBooks = formatResponseData(action.payload)
-            return { ...state, queryItems: fetchedMoreBooks };
+            return { ...state, queryItems: state.queryItems.concat(fetchedMoreBooks) };
         default:
             return state;
     }

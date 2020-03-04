@@ -18,12 +18,11 @@ export const HandleSearch = (keyword) => {
         console.log(error)
     }
 };
-export const searchMoreBooks = (keyword, amount) => {
+export const searchMoreBooks = (keyword, amount, index) => {
     try {
         return async (dispatch) => {
-            console.log(`https://www.googleapis.com/books/v1/volumes?q=${keyword}&maxResults=${amount}`)
             const response = await axios.get(
-                `https://www.googleapis.com/books/v1/volumes?q=${keyword}&maxResults=${amount}`
+                `https://www.googleapis.com/books/v1/volumes?q=${keyword}&maxResults=${amount}&startIndex=${index}`
             );
             dispatch({
                 type: SEARCH_MORE_BOOK,
@@ -31,6 +30,6 @@ export const searchMoreBooks = (keyword, amount) => {
             });
         }
     } catch (error) {
-        console.log(error)
+        console.log("can't not fetch books, return 404 error")
     }
 };

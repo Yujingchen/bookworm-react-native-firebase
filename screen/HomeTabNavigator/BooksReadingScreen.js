@@ -187,10 +187,10 @@ class BooksReadingScreen extends Component {
         else {
             swipeoutButtons.unshift(
                 {
-                    text: 'Mark Unread',
+                    text: 'Remove from favourite',
                     component: (
                         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                            <Text style={{ color: colors.textWhite }}> Mark Unread </Text>
+                            <Text style={{ color: colors.textWhite }}> Remove favourite </Text>
                         </View>
                     ),
                     backgroundColor: colors.bgUnread,
