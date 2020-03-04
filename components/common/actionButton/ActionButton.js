@@ -1,7 +1,7 @@
 import React from "react"
 import { View, StyleSheet, TouchableOpacity, style } from "react-native"
 import PropTypes from "prop-types"
-import colors from "../../assets/colors"
+import colors from "../../../assets/colors"
 getPosition = (position) => {
     switch (position) {
         case 'left':

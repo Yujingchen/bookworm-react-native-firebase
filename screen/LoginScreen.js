@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput, ActivityIndicator } from "react-native"
 import colors from '../assets/colors';
-import ActionButton from "../components/Common/ActionButton"
+import ActionButton from "../components/common/actionButton/ActionButton"
 import * as firebase from "firebase"
 import 'firebase/database'
 import 'firebase/auth'

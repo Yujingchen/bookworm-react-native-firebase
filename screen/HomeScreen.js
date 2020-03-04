@@ -1,13 +1,10 @@
 import React from 'react';
-import { Text, View, SafeAreaView, FlatList, ActivityIndicator } from 'react-native';
+import { Text, View, SafeAreaView, FlatList } from 'react-native';
 import SearchBar from "../components/SearchBar/SearchBar"
 import colors from "../assets/colors"
 import * as firebase from "firebase/app"
 import { snapshotToArray } from "../helper/firebaseHelpers"
-import { Ionicons } from '@expo/vector-icons';
-import ListItem from "../components/Common/ListItem"
 import { connect } from "react-redux"
-import Swipeout from "react-native-swipeout"
 import { compose } from "redux"
 import { connectActionSheet } from "@expo/react-native-action-sheet"
 import {
@@ -18,7 +15,8 @@ import { HandleSearch, searchMoreBooks } from "../store/action/search"
 import styles from '../styles/Stylesheet'
 import "firebase/storage"
 import Footer from "../components/footer/Footer"
-import BookList from "../components/Book/BookList"
+import BookList from "../components/book/BookList"
+import ListEmptyComponent from "../components/common/listEmptyComponent/ListEmptyComponent"
 class HomeScreen extends React.Component {
     constructor() {
         super()
@@ -29,7 +27,6 @@ class HomeScreen extends React.Component {
             amounts: 10,
             loading: true,
             loadingMore: false,
-            error: null,
             refreshing: false,
             currentUser: {}
         }
@@ -48,10 +45,6 @@ class HomeScreen extends React.Component {
         })
         this.props.loadBooks(booksArray.reverse())
         this.props.toogleIsLoadingBooks(false)
-    }
-    componentDidUpdate(preveProps, prevState) {
-        if (prevState.readCount < this.state.readCount) {
-        }
     }
     handleOnChange = (text) => {
         this.setState({
@@ -117,33 +110,6 @@ class HomeScreen extends React.Component {
         }
     };
 
-
-    // renderItem = (item) => {
-    //     let swipeoutButtons = [
-    //         {
-    //             text: 'Save',
-    //             component: (
-    //                 <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-    //                     <Text style={{ color: colors.textWhite }}> Save </Text>
-    //                 </View>
-    //             ),
-    //             backgroundColor: colors.bgSuccessDark,
-    //             onPress: () => this.handleSave(item)
-    //         }
-    //     ]
-
-    //     return (
-    //         <Swipeout backgroundColor={colors.bgMain} style={{ marginHorizontal: 5, marginVertical: 5 }}
-    //             right={swipeoutButtons} autoClose={true}>
-    //             < ListItem marginVertical={0} item={item} >
-    //                 {
-    //                     item.read &&
-    //                     (<Ionicons name="ios-checkmark" color={colors.logoColor} size={30}></Ionicons>)
-    //                 }
-    //             </ListItem >
-    //         </Swipeout>
-    //     )
-    // }
     render() {
         const { value, query } = this.state
         return (
@@ -160,12 +126,10 @@ class HomeScreen extends React.Component {
                             refreshing={this.state.refreshing}
                             renderItem={
                                 ({ item }, index) =>
-                                    <BookList item={item} index={index} />}
+                                    <BookList item={item} index={index} handleSave={this.handleSave} />}
                             keyExtractor={(item, index) => index.toString()}
                             ListEmptyComponent={
-                                <View style={styles.warningMessage}>
-                                    <Text style={{ fontWeight: "bold" }}>Enter book name to search books</Text>
-                                </View>
+                                <ListEmptyComponent text="Enter book name to search" />
                             } />
 
                     </View>

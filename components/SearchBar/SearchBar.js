@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, TextInput } from 'react-native';
 import { Ionicons } from "@expo/vector-icons"
-import ActionButton from "../Common/ActionButton"
+import ActionButton from "../common/actionButton/ActionButton"
 import colors from "../../assets/colors"
 class InputBar extends Component {
 

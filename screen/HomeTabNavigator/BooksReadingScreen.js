@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import colors from "../../assets/colors"
-import ListItem from "../../components/Common/ListItem"
+import ListItem from "../../components/common/listItem/ListItem"
 import { connect } from "react-redux"
-import ListEmptyComponent from "../../components/Common/ListEmptyComponent"
+import ListEmptyComponent from "../../components/common/listEmptyComponent/ListEmptyComponent"
 import { snapshotToArray } from "../../helper/firebaseHelpers"
 import Swipeout from "react-native-swipeout"
 import "firebase/storage"
@@ -176,7 +176,7 @@ class BooksReadingScreen extends Component {
                     text: 'Mark Read',
                     component: (
                         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                            <Text style={{ color: colors.textWhite }}> Mark as Read </Text>
+                            <Text style={{ color: colors.textWhite }}> Add to favourite </Text>
                         </View>
                     ),
                     backgroundColor: colors.bgSuccessDark,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from "react-native"
-import ActionButton from "../components/Common/ActionButton"
+import ActionButton from "../components/common/actionButton/ActionButton"
 import colors from "../assets/colors"
 import * as firebase from "firebase/app"
 import 'firebase/auth'

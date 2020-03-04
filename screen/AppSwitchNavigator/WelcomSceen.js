@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import colors from "../../assets/colors"
-import ActionButton from "../../components/Common/ActionButton"
+import ActionButton from "../../components/common/actionButton/ActionButton"
 class WelcomSceen extends Component {
     render() {
         return (

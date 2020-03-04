@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { View, StyleSheet, FlatList, ActivityIndicator } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import colors from "../../assets/colors"
-import ListItem from "../../components/Common/ListItem"
+import ListItem from "../../components/common/listItem/ListItem"
 import { connect } from "react-redux"
-import ListEmptyComponent from "../../components/Common/ListEmptyComponent"
+import ListEmptyComponent from "../../components/common/listEmptyComponent/ListEmptyComponent"
 class BooksReadScreen extends Component {
     renderItem = (item) => {
         return <ListItem item={item} />

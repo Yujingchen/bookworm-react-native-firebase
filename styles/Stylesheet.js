@@ -44,7 +44,9 @@ var styles = StyleSheet.create({
     marginTop: 50,
     alignItems: 'center'
   },
-
+  MessageText: {
+    fontWeight: "bold"
+  },
   inputField: {
     backgroundColor: "transparent",
     color: colors.textWhite,

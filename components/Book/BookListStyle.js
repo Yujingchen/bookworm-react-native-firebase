@@ -19,7 +19,6 @@ var styles = StyleSheet.create({
         flex: 1
     },
     swipeoutBtnText: { color: colors.textWhite },
-    swipeoutBtnBg: { backgroundColor: colors.bgSuccessDark },
     swipeoutIcon: {
         color: colors.logoColor
     }
