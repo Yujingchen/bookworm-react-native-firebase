@@ -27,7 +27,6 @@ class HomeScreen extends React.Component {
             startIndex: 0,
             loading: true,
             loadingMore: false,
-            loadMore: true,
             refreshing: false,
             currentUser: {}
         }
@@ -52,33 +51,32 @@ class HomeScreen extends React.Component {
             value: text
         })
     }
-    handleSearch = async (bookName) => {
+    handleSearch = async (bookName, maxResults) => {
         console.log(`Search with key word: ${bookName}`)
-        this.setState({ query: bookName })
-        this.props.searchBook(bookName)
+        this.setState({ query: bookName, startIndex: 0 })
+        this.props.searchBook(bookName, maxResults)
     }
     handleScroll = async (query) => {
-        const { maxResults, startIndex, loadMore } = this.state
-
-        if (loadMore) {
-            try {
-                this.setState({ loadingMore: true })
-                this.props.searchMoreBooks(query, maxResults, startIndex)
-                console.log(`Search with key word: ${query}, fetching ${maxResults} items, Index ${startIndex}`)
-
-                this.setState((prevState) => {
-                    return {
-                        startIndex: prevState.startIndex + 1
-                    }
-                })
-            }
-            catch {
-                console.log("Fail to load more")
-                this.setState({
-                    loadMore: false,
+        let moreToFetch = this.props.status
+        let totalItems = this.props.totalItems
+        if (moreToFetch && totalItems > 10) {
+            const { maxResults, startIndex } = this.state
+            console.log(`Search with key word: ${query}, fetching ${maxResults} items, Index ${startIndex}`)
+            this.props.searchMoreBooks(query, maxResults, startIndex)
+            this.setState({ loadingMore: true })
+            this.setState((prevState) => {
+                return {
+                    startIndex: prevState.startIndex + 10,
+                }
+            })
+        }
+        else {
+            console.log("fail to load more")
+            this.setState(() => {
+                return {
                     loadingMore: false
-                })
-            }
+                }
+            })
         }
     }
 
@@ -99,11 +97,11 @@ class HomeScreen extends React.Component {
         }
     }
 
-    handleRefresh = (query) => {
+    handleRefresh = (query, maxResults) => {
         if (query) {
-            this.setState({ maxResults: 10, refreshing: true },
+            this.setState({ refreshing: true, startIndex: 0 },
                 () => {
-                    this.props.searchBook(query)
+                    this.props.searchBook(query, maxResults)
                     this.setState({ refreshing: false })
                 }
             );
@@ -111,7 +109,7 @@ class HomeScreen extends React.Component {
     };
 
     render() {
-        const { value, query, loadingMore } = this.state
+        const { value, query, loadingMore, maxResults } = this.state
         return (
             <View style={styles.container} >
                 <SafeAreaView style={styles.safeArea} />
@@ -119,16 +117,16 @@ class HomeScreen extends React.Component {
 
                     <SearchBar
                         handleTextChange={(text) => this.handleOnChange(text)}
-                        searchBooks={() => this.handleSearch(value)}
+                        searchBooks={() => this.handleSearch(value, maxResults)}
                         placeholderTextColor={colors.placeholderTextColor}>
                     </SearchBar>
 
                     <View style={styles.contentContainer}>
-                        <FlatList data={this.props.books.queryItems}
+                        <FlatList data={this.props.books}
                             onEndReachedThreshold={0.7}
                             onEndReached={() => this.handleScroll(query)}
                             ListFooterComponent={<Footer loadingMore={loadingMore} />}
-                            onRefresh={() => this.handleRefresh(query)}
+                            onRefresh={() => this.handleRefresh(query, maxResults)}
                             refreshing={this.state.refreshing}
                             renderItem={
                                 ({ item }, index) =>
@@ -149,7 +147,9 @@ class HomeScreen extends React.Component {
 
 const mapStateToPros = state => {
     return {
-        books: state.books
+        books: state.books.queryItems,
+        status: state.books.status,
+        totalItems: state.books.totalItems
     }
 }
 
@@ -163,8 +163,8 @@ const mapDispatchToProps = dispatch => ({
     toogleIsLoadingBooks: (bool) => {
         dispatch(toogleIsLoadingBooks(bool))
     },
-    searchBook: (book) => {
-        dispatch(HandleSearch(book))
+    searchBook: (book, maxResults) => {
+        dispatch(HandleSearch(book, maxResults))
     },
     searchMoreBooks: (book, maxResults, startIndex) => {
         dispatch(searchMoreBooks(book, maxResults, startIndex))

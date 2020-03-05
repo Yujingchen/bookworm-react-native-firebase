@@ -1,7 +1,10 @@
 import {
     LOAD_BOOKS_FROM_SERVER, Mark_BOOK_AS_READ, Mark_BOOK_AS_UNREAD,
-    ADD_BOOK, DELETE_BOOK, TOGGLE_IS_LOADING_BOOKS, UPDATE_BOOK_IMAGE, SEARCH_BOOK,
-    SEARCH_MORE_BOOK
+    ADD_BOOK, DELETE_BOOK, TOGGLE_IS_LOADING_BOOKS, UPDATE_BOOK_IMAGE,
+    SEARCH_MORE_BOOK_FAIL,
+    SEARCH_MORE_BOOK_SUCCESS,
+    SEARCH_BOOK_SUCCESS,
+    SEARCH_BOOK_FAIL
 } from "../action/actionTypes"
 const initialState = {
     books: [],
@@ -9,7 +12,9 @@ const initialState = {
     booksRead: [],
     isLoadingBooks: true,
     image: null,
-    queryItems: []
+    queryItems: [],
+    totalItems: "",
+    status: true
 }
 
 const books = (state = initialState, action) => {
@@ -86,12 +91,16 @@ const books = (state = initialState, action) => {
                 })
             }
         // ----fetch books with Google API----
-        case SEARCH_BOOK:
-            const fetchedBooks = formatResponseData(action.payload)
-            return { ...state, queryItems: fetchedBooks };
-        case SEARCH_MORE_BOOK:
+        case SEARCH_BOOK_SUCCESS:
+            const fetchedBooks = formatResponseData(action.payload.items)
+            return { ...state, queryItems: fetchedBooks, totalItems: action.payload.totalItems, status: true };
+        case SEARCH_BOOK_FAIL:
+            return { ...state, queryItems: [], status: false };
+        case SEARCH_MORE_BOOK_SUCCESS:
             const fetchedMoreBooks = formatResponseData(action.payload)
             return { ...state, queryItems: state.queryItems.concat(fetchedMoreBooks) };
+        case SEARCH_MORE_BOOK_FAIL:
+            return { ...state, status: false };
         default:
             return state;
     }
