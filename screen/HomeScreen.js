@@ -51,11 +51,13 @@ class HomeScreen extends React.Component {
             value: text
         })
     }
+
     handleSearch = async (bookName, maxResults) => {
         console.log(`Search with key word: ${bookName}`)
         this.setState({ query: bookName, startIndex: 0 })
         this.props.searchBook(bookName, maxResults)
     }
+
     handleScroll = async (query) => {
         let moreToFetch = this.props.status
         let totalItems = this.props.totalItems
@@ -82,7 +84,7 @@ class HomeScreen extends React.Component {
 
     handleSave = async (item) => {
         try {
-            const snapshot = await firebase.database().ref('books').child(this.state.currentUser.uid).orderByChild('bookid').equalTo(item.id).once("value")
+            const snapshot = await firebase.database().ref('books').child(this.state.currentUser.uid).orderByChild('name').equalTo(item.name).once("value")
             if (snapshot.exists()) {
                 alert("Same book already exist in library")
             }
@@ -96,7 +98,7 @@ class HomeScreen extends React.Component {
             console.log(error)
         }
     }
-
+    
     handleRefresh = (query, maxResults) => {
         if (query) {
             this.setState({ refreshing: true, startIndex: 0 },

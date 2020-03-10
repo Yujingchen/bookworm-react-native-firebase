@@ -56,7 +56,7 @@ const HomeTabNavigator = createBottomTabNavigator({
   {
     tabBarOptions: {
       style: {
-        backgroundColor: "#ffffff",
+        backgroundColor: colors.bgMain,
         alignItems: "center",
         justifyContent: "center"
       },
@@ -106,7 +106,7 @@ const HomeStackNavigator = createStackNavigator({
     headerStyle: {
       backgroundColor: colors.bgMain
     },
-    headerTintColor: colors.textWhite
+    headerTintColor: colors.bgMain
   },
   headerLayoutPreset: 'center'
 })
