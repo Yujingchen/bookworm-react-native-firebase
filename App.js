@@ -197,7 +197,6 @@ class App extends React.Component {
           <AppContainer></AppContainer>
         </ActionSheetProvider>
       </Provider>
-
     )
   }
 }

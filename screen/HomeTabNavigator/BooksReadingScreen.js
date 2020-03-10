@@ -13,7 +13,7 @@ import {
 } from "../../store/action/book"
 
 import Layout from "../../components/layout/Layout"
-
+import ScreenHead from "../../components/layout/ScreenHead"
 class BooksReadingScreen extends Component {
     constructor() {
         super()
@@ -52,7 +52,11 @@ class BooksReadingScreen extends Component {
     render() {
         return (
             <View>
-                <Layout></Layout>
+                <Layout>
+                    <View class='screenTitleContainer'>
+                        <ScreenHead screenTitleText="Library"></ScreenHead>
+                    </View>
+                </Layout>
             </View>
         );
     }

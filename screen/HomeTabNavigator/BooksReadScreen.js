@@ -31,7 +31,7 @@ class BooksReadScreen extends Component {
                     </ListEmptyComponent>)
                     }
                 />
-            </ View>
+            </View>
         );
     }
 }

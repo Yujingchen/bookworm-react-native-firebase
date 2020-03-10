@@ -1,17 +1,23 @@
 import { StyleSheet } from 'react-native';
-import colors from "../assets/colors"
 
 var layoutStyles = StyleSheet.create({
-  body: {
-    color: white
+  screenBody: {
+    marginHorizontal: 25,
+    color: "white"
   },
-  screenTitle: {
-    color: black,
-    font: "Times New Roman", Times, serif,
+  screenHeadTitle: {
+    color: "black",
+    fontFamily: "serif",
     fontSize: 30,
-    fontWeight: "800"
+    fontWeight: "bold"
+  },
+  screenHead: {
+    borderBottomWidth: 1,
+    borderBottomColor: "lightgrey",
+    paddingBottom: 5
   }
-});
+})
+
 
 module.exports = layoutStyles;
 
