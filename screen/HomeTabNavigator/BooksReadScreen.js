@@ -13,7 +13,7 @@ class BooksReadScreen extends Component {
 
     render() {
         return (
-            <View style={styles.container} >
+            <View style={{ backgroundColor: colors.bgMain, minHeight: "100 %" }} >
                 {this.props.books.isLoadingBooks && (<View style={{
                     ...StyleSheet.absoluteFill,
                     justifyContent: 'center',
@@ -31,21 +31,11 @@ class BooksReadScreen extends Component {
                     </ListEmptyComponent>)
                     }
                 />
-            </ View>
+            </View>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1, backgroundColor: colors.bgMain
-    },
-    warningMessage: {
-        marginTop: 50,
-        alignItems: 'center'
-    },
-
-})
 const mapStateToProps = (state) => {
     return {
         books: state.books

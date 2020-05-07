@@ -11,7 +11,7 @@ var styles = StyleSheet.create({
     imageContainer: {
         height: 70,
         width: 70,
-        marginLeft: 10
+        marginLeft: 10,
     },
     containerWrapper: {
         height: 50,
@@ -23,23 +23,23 @@ var styles = StyleSheet.create({
         flex: 1,
         height: null,
         width: null,
-        borderRadius: 35
+        borderRadius: 35,
     },
     image: {
         flex: 1,
         height: null,
         width: null,
-        borderRadius: 35
+        borderRadius: 35,
     },
     textContainer: {
         flex: 1,
         justifyContent: 'center',
-        paddingLeft: 5
+        paddingLeft: 5,
     },
     text: {
         fontWeight: "100",
         fontSize: 15,
-        color: colors.textWhite
+        color: colors.textWhite,
     }
 });
 
