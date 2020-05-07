@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, SafeAreaView, Text } from "react-native"
 import layoutStyles from "../../styles/layout/layoutStyles"
-import ScreenHead from "./ScreenHead"
+import ScreenHead from "./Head"
 class Layout extends React.Component {
 
     render() {

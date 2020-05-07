@@ -13,7 +13,7 @@ import {
 } from "../../store/action/book"
 
 import Layout from "../../components/layout/Layout"
-import ScreenHead from "../../components/layout/ScreenHead"
+import ScreenHead from "../../components/layout/Head"
 class BooksReadingScreen extends Component {
     constructor() {
         super()
@@ -54,7 +54,7 @@ class BooksReadingScreen extends Component {
             <View>
                 <Layout>
                     <View class='screenTitleContainer'>
-                        <ScreenHead screenTitleText="Library"></ScreenHead>
+                        <Head screenTitleText="Library"></Head>
                     </View>
                 </Layout>
             </View>

@@ -14,11 +14,11 @@ import BooksReadScreen from "./screen/HomeTabNavigator/BooksReadScreen"
 import * as firebase from 'firebase/app';
 import firebaseConfig from './config/config';
 import colors from './assets/colors';
-import CustomDrawerComponent from "./screen/DrawerNavigator/CustomDrawerComponent"
+import CustomDrawerComponent from "./screen/DrawerNavigator/CustomDrawerComponent";
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import BooksCountContainer from "./store/containers/BooksCountContainer"
-import { ActionSheetProvider } from "@expo/react-native-action-sheet"
+import BooksCountContainer from "./components/icon/BottomTabIcon";
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 
 const HomeTabNavigator = createBottomTabNavigator({
   HomeScreen: {
