@@ -4,19 +4,28 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, Image
 import colors from "../../assets/colors"
 import PropTypes from 'prop-types'
 
-const BottomTabIcon = ({ color, iconName, ...props }) => {
+export const BottomTabIcon = ({ color, iconName, ...props }) => {
     return (
         <View style={styles.container}>
             <Text style={{ color: color }}>
-                {tabIcon(iconName)}
+                {Icon(iconName, colors.black, 25)}
             </Text>
         </View>
     );
 }
+export const DefaultIcon = ({ color, iconName, ...props }) => {
+    <View style={styles.container}>
+        <Text style={{ color: color }}>
+            {props.children}
+            {Icon(iconName, "#c7c6ca", props.size)}
+        </Text>
+    </View>
+}
 
-const tabIcon = (name) => {
+
+const Icon = (name, color, size) => {
     if (name != undefined) {
-        return <Ionicons name={name} color={colors.black} size={25}></Ionicons>
+        return <Ionicons name={name} color={color} size={size}></Ionicons>
     }
     return <Ionicons name="ios-alert" color={colors.black} size={25}></Ionicons>
 }
@@ -35,4 +44,3 @@ const styles = StyleSheet.create({
     }
 })
 
-export default BottomTabIcon;

@@ -17,7 +17,7 @@ import colors from './assets/colors';
 import CustomDrawerComponent from "./screen/DrawerNavigator/CustomDrawerComponent";
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import BooksCountContainer from "./components/icon/BottomTabIcon";
+import { BottomTabIcon } from "./components/icon/Icon";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 
 const HomeTabNavigator = createBottomTabNavigator({
@@ -25,9 +25,9 @@ const HomeTabNavigator = createBottomTabNavigator({
     screen: HomeScreen,
     navigationOptions: {
       tabBarIcon: () => (
-        <BooksCountContainer
+        <BottomTabIcon
           color={"white"} type="Home">
-        </BooksCountContainer>
+        </BottomTabIcon>
       )
     },
 
@@ -36,9 +36,9 @@ const HomeTabNavigator = createBottomTabNavigator({
     screen: BooksReadingScreen,
     navigationOptions: {
       tabBarIcon: () => (
-        <BooksCountContainer
+        <BottomTabIcon
           type="collection">
-        </BooksCountContainer>
+        </BottomTabIcon>
       ),
     }
   },
@@ -46,9 +46,9 @@ const HomeTabNavigator = createBottomTabNavigator({
     screen: BooksReadScreen,
     navigationOptions: {
       tabBarIcon: () => (
-        <BooksCountContainer
+        <BottomTabIcon
           type="Done">
-        </BooksCountContainer>
+        </BottomTabIcon>
       )
     }
   },
