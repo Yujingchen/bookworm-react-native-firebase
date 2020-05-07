@@ -5,21 +5,27 @@ import colors from "../../assets/colors"
 import PropTypes from 'prop-types'
 
 export const BottomTabIcon = ({ color, iconName, ...props }) => {
-    return (
-        <View style={styles.container}>
-            <Text style={{ color: color }}>
-                {Icon(iconName, colors.black, 25)}
-            </Text>
-        </View>
-    );
+    if (color, iconName != undefined) {
+        return (
+            <View style={styles.container}>
+                <Text style={{ color: color }}>
+                    {Icon(iconName, colors.black, 32)}
+                </Text>
+            </View>
+        );
+    }
 }
 export const DefaultIcon = ({ color, iconName, ...props }) => {
-    <View style={styles.container}>
-        <Text style={{ color: color }}>
-            {props.children}
-            {Icon(iconName, "#c7c6ca", props.size)}
-        </Text>
-    </View>
+    if (color, iconName != undefined) {
+        return (
+            <View style={styles.container}>
+                <Text style={{ color: color }}>
+                    {props.children}
+                    {Icon(iconName, "#c7c6ca", props.size)}
+                </Text>
+            </View>
+        )
+    }
 }
 
 
@@ -32,10 +38,20 @@ const Icon = (name, color, size) => {
 
 BottomTabIcon.propTypes = {
     color: PropTypes.string,
-    iconName: PropTypes.string.isRequired
+    iconName: PropTypes.string.isRequired,
+    size: PropTypes.number.isRequired,
 }
 BottomTabIcon.defaultProps = {
-    color: colors.textPlaceholder
+    color: colors.textPlaceholder,
+}
+DefaultIcon.propTypes = {
+    color: PropTypes.string,
+    iconName: PropTypes.string.isRequired,
+    size: PropTypes.number.isRequired,
+}
+DefaultIcon.defaultProps = {
+    color: colors.textPlaceholder,
+    size: 20,
 }
 const styles = StyleSheet.create({
     container: {

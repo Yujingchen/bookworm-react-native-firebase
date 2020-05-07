@@ -13,7 +13,7 @@ class BooksReadScreen extends Component {
 
     render() {
         return (
-            <View style={styles.container} >
+            <View style={{ backgroundColor: colors.bgMain, minHeight: "100 %" }} >
                 {this.props.books.isLoadingBooks && (<View style={{
                     ...StyleSheet.absoluteFill,
                     justifyContent: 'center',

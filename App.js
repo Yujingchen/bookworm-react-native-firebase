@@ -14,20 +14,19 @@ import BooksReadScreen from "./screen/HomeTabNavigator/BooksReadScreen"
 import * as firebase from 'firebase/app';
 import firebaseConfig from './config/config';
 import colors from './assets/colors';
-import CustomDrawerComponent from "./screen/DrawerNavigator/CustomDrawerComponent";
+import CustomDrawerComponent from "./screen/DrawerNavigator/CustomDrawerComponent"
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import { BottomTabIcon } from "./components/icon/Icon";
-import { ActionSheetProvider } from "@expo/react-native-action-sheet";
+import { BottomTabIcon } from "./components/icon/Icon"
+import { ActionSheetProvider } from "@expo/react-native-action-sheet"
 
 const HomeTabNavigator = createBottomTabNavigator({
   HomeScreen: {
     screen: HomeScreen,
     navigationOptions: {
+      tabBarLabel: 'Home',
       tabBarIcon: () => (
-        <BottomTabIcon
-          color={"white"} type="Home">
-        </BottomTabIcon>
+        <BottomTabIcon iconName="ios-book" />
       )
     },
 
@@ -35,20 +34,18 @@ const HomeTabNavigator = createBottomTabNavigator({
   BooksReadingScreen: {
     screen: BooksReadingScreen,
     navigationOptions: {
+      tabBarLabel: 'Library',
       tabBarIcon: () => (
-        <BottomTabIcon
-          type="collection">
-        </BottomTabIcon>
+        <BottomTabIcon iconName="ios-albums" />
       ),
     }
   },
   BooksReadScreen: {
     screen: BooksReadScreen,
     navigationOptions: {
+      tabBarLabel: 'Book Store',
       tabBarIcon: () => (
-        <BottomTabIcon
-          type="Done">
-        </BottomTabIcon>
+        <BottomTabIcon iconName="md-appstore" />
       )
     }
   },
@@ -60,9 +57,9 @@ const HomeTabNavigator = createBottomTabNavigator({
         alignItems: "center",
         justifyContent: "center"
       },
-      activeTintColor: "#ffffff",
-      inactiveTintColor: "#000000",
-      showLabel: false,
+      activeTintColor: "#000000",
+      inactiveTintColor: "#a1a1a1",
+      showLabel: true,
       labelPosition: "below-icon"
     }
   }

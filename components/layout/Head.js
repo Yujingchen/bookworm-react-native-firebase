@@ -1,21 +1,36 @@
 import React from 'react'
 import { View, SafeAreaView, Text } from "react-native"
-import layoutStyles from "../../styles/layout/layoutStyles"
-
+import HeadStyles from "./HeadStyles"
+import PropTypes from 'prop-types'
 
 class Head extends React.Component {
-    headTitle = (
-        <Text style={layoutStyles.screenHeadTitle}>{this.props.headTitle}</Text>
-    )
     render() {
+        const { title, ...props } = this.props
+        if (title != undefined) {
+            var headTitle = (
+                <Text style={HeadStyles.title}>{title}</Text>
+            )
+            return (
+                <SafeAreaView>
+                    <View style={HeadStyles.head} class='screen-head'>
+                        {headTitle}
+                        {this.props.children}
+                    </View>
+                </SafeAreaView>
+            )
+        }
         return (
             <SafeAreaView>
-                <View style={layoutStyles.screenHead} class='screen-head'>
-                    {headTitle}
+                <View>
                     {this.props.children}
                 </View>
             </SafeAreaView>
         )
     }
 }
+
+Head.propTypes = {
+    title: PropTypes.string.isRequired,
+}
+
 export default Head

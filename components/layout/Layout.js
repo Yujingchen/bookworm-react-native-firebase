@@ -1,13 +1,13 @@
 import React from 'react'
 import { View, SafeAreaView, Text } from "react-native"
-import layoutStyles from "../../styles/layout/layoutStyles"
+import LayoutStyles from "./LayoutStyles"
 import ScreenHead from "./Head"
 class Layout extends React.Component {
 
     render() {
 
         const layout =
-            (<View style={layoutStyles.screenBody}>
+            (<View style={LayoutStyles.body}>
                 {this.props.children}
             </View>)
 
