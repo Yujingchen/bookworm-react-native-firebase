@@ -98,7 +98,7 @@ class HomeScreen extends React.Component {
             console.log(error)
         }
     }
-    
+
     handleRefresh = (query, maxResults) => {
         if (query) {
             this.setState({ refreshing: true, startIndex: 0 },
@@ -145,7 +145,6 @@ class HomeScreen extends React.Component {
         );
     }
 }
-
 
 const mapStateToPros = state => {
     return {

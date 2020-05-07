@@ -12,7 +12,8 @@ const colors = {
     listItemBg: "#354D58DA",
     bgDelete: "#6E3C3CDA",
     bgSuccessDark: "#3C6E47DA",
-    bgUnread: "#436E81"
+    bgUnread: "#436E81",
+    black: "#000000"
 }
 
 export default colors;
