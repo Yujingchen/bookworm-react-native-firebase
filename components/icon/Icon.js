@@ -4,17 +4,20 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, Image
 import colors from "../../assets/colors"
 import PropTypes from 'prop-types'
 
-export const BottomTabIcon = ({ color, iconName, ...props }) => {
-    if (color, iconName != undefined) {
+export const BottomTabIcon = ({ iconName, focus, ...props }) => {
+    if (iconName != undefined) {
+        let color
+        color = focus ? "#000000" : "#d7d9d8"
         return (
             <View style={styles.container}>
-                <Text style={{ color: color }}>
-                    {Icon(iconName, colors.black, 32)}
+                <Text>
+                    {Icon(iconName, color, 32)}
                 </Text>
             </View>
         );
     }
 }
+
 export const DefaultIcon = ({ color, iconName, ...props }) => {
     if (color, iconName != undefined) {
         return (
@@ -28,7 +31,6 @@ export const DefaultIcon = ({ color, iconName, ...props }) => {
     }
 }
 
-
 const Icon = (name, color, size) => {
     if (name != undefined) {
         return <Ionicons name={name} color={color} size={size}></Ionicons>
@@ -37,9 +39,8 @@ const Icon = (name, color, size) => {
 }
 
 BottomTabIcon.propTypes = {
-    color: PropTypes.string,
     iconName: PropTypes.string.isRequired,
-    size: PropTypes.number.isRequired,
+    focus: PropTypes.bool.isRequired,
 }
 BottomTabIcon.defaultProps = {
     color: colors.textPlaceholder,

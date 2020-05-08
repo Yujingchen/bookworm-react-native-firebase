@@ -25,43 +25,49 @@ const HomeTabNavigator = createBottomTabNavigator({
     screen: HomeScreen,
     navigationOptions: {
       tabBarLabel: 'Home',
-      tabBarIcon: () => (
-        <BottomTabIcon iconName="ios-book" />
-      )
+      tabBarIcon: ({ focused }) => {
+        return (
+          <BottomTabIcon iconName="ios-book" focus={focused} />
+        )
+      },
     },
-
   },
   BooksReadingScreen: {
     screen: BooksReadingScreen,
     navigationOptions: {
       tabBarLabel: 'Library',
-      tabBarIcon: () => (
-        <BottomTabIcon iconName="ios-albums" />
-      ),
+      tabBarIcon: ({ focused }) => {
+        return (
+          <BottomTabIcon iconName="ios-albums" focus={focused} />
+
+        )
+      },
     }
   },
   BooksReadScreen: {
     screen: BooksReadScreen,
     navigationOptions: {
       tabBarLabel: 'Book Store',
-      tabBarIcon: () => (
-        <BottomTabIcon iconName="md-appstore" />
-      )
+      tabBarIcon: ({ focused }) => {
+        return (<BottomTabIcon iconName="md-appstore" focus={focused} />)
+      }
     }
   },
 },
   {
     tabBarOptions: {
       style: {
-        backgroundColor: colors.bgMain,
+        backgroundColor: colors.textWhite,
         alignItems: "center",
         justifyContent: "center"
       },
+      showLabel: true,
+      showIcon: true,
       activeTintColor: "#000000",
       inactiveTintColor: "#a1a1a1",
-      showLabel: true,
-      labelPosition: "below-icon"
-    }
+      labelPosition: "below-icon",
+      labelStyle: { fontWeight: "bold" }
+    },
   }
 )
 
